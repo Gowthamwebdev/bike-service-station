@@ -1,7 +1,12 @@
 import { usePathname } from 'next/navigation';
 import React from 'react';
 
-const NavLink = ({ label, href }) => {
+interface NavLinkProps {
+  label: string;
+  href: string;
+}
+
+const NavLink: React.FC<NavLinkProps> = ({ label, href }) => {
   const pathName = usePathname();
 
   return (
