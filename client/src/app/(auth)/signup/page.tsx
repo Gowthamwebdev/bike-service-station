@@ -4,6 +4,7 @@ import React from "react";
 import { Form, Input, Button } from "@heroui/react";
 import apiClient from "@/src/api/apiClient";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function Signup() {
 
@@ -71,9 +72,9 @@ export default function Signup() {
       console.log("Signup successful:", response.data);
       alert("Signup successful! redirecting...");
 
-      // setTimeout(() => {
-      //   router.push('/login');
-      // }, 2000)
+      setTimeout(() => {
+        router.push('/login');
+      }, 2000)
 
     } catch (error) {
       console.error("Signup failed:", error);
