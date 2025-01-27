@@ -1,4 +1,5 @@
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
+import { ProfileCardPopover } from "../ProfileCard";
 
 export default function App() {
 
@@ -41,6 +42,7 @@ export default function App() {
           Contact Us
         </Button>
       </NavbarContent>
+      <ProfileCardPopover/>
     </Navbar>
     </div>
   );
