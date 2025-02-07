@@ -4,16 +4,19 @@ import { Form, Input, Button } from "@heroui/react";
 import { ErrorState, FormState } from "@/src/types/formType";
 import apiClient from "@/src/api/apiClient";
 import { useRouter } from "next/navigation";
+import { useGlobalContext } from "@/src/context/GlobalProviders";
 
 const Login = () => {
   const [formState, setFormState] = useState<FormState>({
     email: "",
     password: "",
   });
-  const router = useRouter();
-
   const [errors, setErrors] = useState<ErrorState>({});
   const [loginStatus, setLoginStatus] = useState<string | null>(null); // State for login status message
+  const router = useRouter();
+
+  // Get the global context at the top of the component
+  const { setUser } = useGlobalContext();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,33 +28,42 @@ const Login = () => {
 
     if (!formState.email || !formState.password) {
       setErrors({
-        name: !formState.email ? "email is required" : undefined,
+        email: !formState.email ? "Email is required" : undefined,
         password: !formState.password ? "Password is required" : undefined,
       });
       return;
     }
-    console.log(formState.email, formState.password)
 
     try {
       const response = await apiClient.post("/auth/login", {
         email: formState.email,
         password: formState.password,
-      },{
+      }, {
         withCredentials: true 
       });
-        console.log("Login successful:", response.data);
+
+      // Log the response to check structure
+      console.log("Login successful:", response.data);
+
       setLoginStatus(response.data.message || "Login successful!");
+
+      // Extract user info from the response and update the global context
+      setUser({
+        userId: response.data.user.id,  // Assuming response.data contains user object
+        name: response.data.user.name,   // Assuming response.data contains user object
+      });
 
       setTimeout(() => {
         router.push("/dashboard"); // Redirect to dashboard after successful login
-      },2000);
+      }, 2000);
+
       setErrors({});
       
     } catch (error: any) {
       console.error("Error:", error);
       setLoginStatus(
         error.response?.data?.error || "An unexpected error occurred"
-      ); // Display error message
+      );
     }
   };
 
@@ -74,7 +86,7 @@ const Login = () => {
             onValueChange={(value) =>
               setFormState((prev) => ({ ...prev, email: value }))
             }
-            errorMessage={errors.name}
+            errorMessage={errors.email}
           />
 
           {/* Password Input */}

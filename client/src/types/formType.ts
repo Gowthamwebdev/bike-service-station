@@ -4,7 +4,7 @@ export interface FormState {
 }
 
 export interface ErrorState {
-    name?: string;
+    email?: string;
     password?: string;
     api?: string;
 }
