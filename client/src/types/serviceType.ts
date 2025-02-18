@@ -1,6 +1,8 @@
 
 
 export type serviceType = {
-  serviceName: string;
-  servicePrice: number;
+  _id: string;
+  name: string;
+  description: string;
+  bookingCount: number;
 };

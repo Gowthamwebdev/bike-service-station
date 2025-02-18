@@ -1,20 +1,16 @@
 'use client';
 
-import { viewServices } from '@/src/api/getServices';
-import { view } from 'framer-motion';
+import { getServices } from '@/src/api/getServices';
+import { serviceType } from '@/src/types/serviceType';
 import React, { useEffect, useState } from 'react';
 
-interface Service {
-  serviceName: string;
-}
-
 function ViewServices() {
-  const [services, setServices] = useState<Service[]>([]);
+  const [services, setServices] = useState<serviceType[]>([]);
 
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const data = await viewServices();
+        const data = await getServices();
         setServices(data);
       } catch (error) {
         console.error('Failed to fetch services:', error);
@@ -30,10 +26,11 @@ function ViewServices() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-4xl">
           {services.map((item) => (
             <div
-              key={item.serviceName}
-              className="border border-gray-400 rounded-md p-4 text-center"
+              key={item._id}
+              className=" rounded-md p-4 text-center"
             >
-              <h3 className="text-lg font-medium">{item.serviceName}</h3>
+              <h3 className="text-lg font-medium">{item.name}</h3>
+              <p className="text-gray-600">{item.description}</p>
             </div>
           ))}
         </div>

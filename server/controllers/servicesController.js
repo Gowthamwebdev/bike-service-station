@@ -28,8 +28,9 @@ export const addServices = async (req, res) => {
 export const getServices = async (req, res) => {
     try {
         const services = await prisma.service.findMany();
+        console.log(services.length);
         res.status(200).json(services);
     } catch (error) {
-        res.status(500).json({ error: "Failed to retrieve services." });
+        res.status(500).json({ error: error.message });
     }
 };
