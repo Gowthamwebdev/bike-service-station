@@ -1,39 +1,82 @@
+'use client';
+
 import Link from "next/link";
-import React from "react";
-// import ThemeToggle from "./ThemeToggle";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { authStatus } from "@/src/api/authStatus";
+import apiClient from "@/src/api/apiClient";
+
 const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const data = await authStatus();
+        setIsLoggedIn(data?.loggedIn || false);
+      } catch (error) {
+        console.error("Failed to check auth status:", error);
+        setIsLoggedIn(false);
+      }
+    };
+
+    checkAuthStatus();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await apiClient.post('/auth/logout');
+      setIsLoggedIn(false);
+      window.location.reload();
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
   return (
-    <div className="">
+    <div>
       <div className="fixed w-full z-50 text-sm backdrop-blur-md">
-      <div className="py-2 lg:px-20 md:px-10 px-5 flex justify-between dark:border-zinc-800 border-b-[0.5px]">
-        <div className="flex  items-center">
-          <Image
-            src="/logo.png"
-            width="500"
-            height="500"
-            alt="logo"
-            className="w-10 h-10 logo dark:logodark"
-          />
-          <Link href={"/"} className="text-lg font-bold pr-2">Bike<span className="text-orange-600">Service</span></Link>
-        </div>
-        <div className="lg:flex hidden items-center gap-7  text-sm font-semibold">
-          <Link href={"/"} className="dark:hover:text-white hover:text-black duration-100">Dashboard</Link>
-          <Link href={"/"} className="dark:hover:text-white hover:text-black duration-100">Services</Link>
-          <Link href={"/"} className="dark:hover:text-white hover:text-black duration-100">Bookings</Link>
-          <Link href={"/"} className="dark:hover:text-white hover:text-black duration-100">Contact</Link>
-        </div>zz  
-        <div className="lg:flex hidden items-center gap-5">
-          <Link
-            href={"/auth/login"}
-            className="px-4 py-0.5 pb-1 bg-gradient-to-br from-orange-500 via-orange-700 to-orange-800 font-semibold rounded-lg border-red-400 text-white"
-          >
-            Login
-          </Link>
+        <div className="py-2 lg:px-20 md:px-10 px-5 flex justify-between dark:border-zinc-800 border-b-[0.5px]">
+          <div className="flex items-center">
+            <Image
+              src="/logo.png"
+              width="500"
+              height="500"
+              alt="logo"
+              className="w-10 h-10 logo dark:logodark"
+            />
+            <Link href={"/"} className="text-lg font-bold pr-2">
+              Bike<span className="text-orange-600">Service</span>
+            </Link>
+          </div>
+
+          <div className="lg:flex hidden items-center gap-7 text-sm font-semibold">
+            <Link href={"/dashboard"} className="dark:hover:text-white hover:text-black duration-100">Dashboard</Link>
+            <Link href={"/view-services"} className="dark:hover:text-white hover:text-black duration-100">Services</Link>
+            <Link href={"/bookings"} className="dark:hover:text-white hover:text-black duration-100">Bookings</Link>
+            <Link href={"/contact"} className="dark:hover:text-white hover:text-black duration-100">Contact</Link>
+          </div>
+
+          <div className="lg:flex hidden items-center gap-5">
+            {isLoggedIn ? (
+              <button
+                onClick={handleLogout}
+                className="px-4 py-0.5 pb-1 bg-gradient-to-br from-red-500 via-red-700 to-red-800 font-semibold rounded-lg text-white"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                href={"/auth/login"}
+                className="px-4 py-0.5 pb-1 bg-gradient-to-br from-orange-500 via-orange-700 to-orange-800 font-semibold rounded-lg text-white"
+              >
+                Login
+              </Link>
+            )}
+          </div>
         </div>
       </div>
-    </div>
-    <div className="pt-20"></div>
+      <div className="pt-20"></div>
     </div>
   );
 };

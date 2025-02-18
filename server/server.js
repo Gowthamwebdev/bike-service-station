@@ -3,6 +3,8 @@ import cors from 'cors';
 import { urlencoded, json} from 'express';
 import bodyParser from 'body-parser';
 import authRoutes from './routes/authRoutes.js';
+import servicesRoutes from './routes/servicesRoutes.js';
+import cookieParser from 'cookie-parser';
 const app = express();
 
 app.use(cors({
@@ -23,7 +25,10 @@ app.use(cors({
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(cookieParser());
+
 app.use('/api/auth', authRoutes);
+app.use('/api/services', servicesRoutes);
 app.listen(5000, () => {
     console.log('listening on port 5000');
 })

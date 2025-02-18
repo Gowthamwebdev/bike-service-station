@@ -12,7 +12,7 @@ const Login = () => {
     password: "",
   });
   const [errors, setErrors] = useState<ErrorState>({});
-  const [loginStatus, setLoginStatus] = useState<string | null>(null); // State for login status message
+  const [loginStatus, setLoginStatus] = useState<string | null>(null);
   const router = useRouter();
 
   // Get the global context at the top of the component
@@ -24,7 +24,7 @@ const Login = () => {
   };
 
   const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent page reload on form submission
+    e.preventDefault(); 
 
     if (!formState.email || !formState.password) {
       setErrors({
@@ -42,15 +42,13 @@ const Login = () => {
         withCredentials: true 
       });
 
-      // Log the response to check structure
       console.log("Login successful:", response.data);
 
       setLoginStatus(response.data.message || "Login successful!");
 
-      // Extract user info from the response and update the global context
       setUser({
-        userId: response.data.user.id,  // Assuming response.data contains user object
-        name: response.data.user.name,   // Assuming response.data contains user object
+        userId: response.data.user.id,  
+        name: response.data.user.name, 
       });
 
       setTimeout(() => {

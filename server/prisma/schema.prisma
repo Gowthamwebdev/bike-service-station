@@ -26,7 +26,8 @@ model Booking {
 }
 
 model Service {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  price     Float
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  description   String
+  bookingCount  Int   @default(0)
 }

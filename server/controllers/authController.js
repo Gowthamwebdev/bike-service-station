@@ -38,46 +38,64 @@ export const signup = async(req, res) => {
 
 
 
-export const login = async(req, res) => {
-    try{
-        //validating user input
-        const { email, password } = req.body;
-        console.log(email)
-        if(!email ||!password){
-            return res.status(400).json({ error: "Invalid Credentials" });
-        }
-
-        const user = await prisma.user.findUnique({ where: {email}});
-        if(!user){
-            return res.status(401).json({ error: "User not found" });
-        }
-
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if(!isPasswordValid){
-            return res.status(401).json({ error: "Invalid Credentials" });
-        }
-
-        const accessToken = jwt.sign({
-            userId: user.id
-        },
+export const login = async (req, res) => {
+    try {
+      const { email, password } = req.body;
+  
+      // Validate input
+      if (!email || !password) {
+        return res.status(400).json({ error: "Email and password are required" });
+      }
+  
+      // Find user
+      const user = await prisma.user.findUnique({ where: { email } });
+      if (!user) {
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+  
+      // Validate password
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+  
+      // Generate token
+      const accessToken = jwt.sign(
+        { userId: user.id },
         process.env.JWT_SECRET,
-            { expiresIn: '1h' }
-        )
-        
-        res.cookie('token', accessToken,{
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',  // Set to true in production
-            sameSite: 'strict'
-        })
-
-        res.status(200).json({
-            message: `Welcome ${user.name}`,
-            accessToken,
-            user: { name: user.name, email: user.email },
-        });
-    }  
-        
-    catch (error){
-        res.status(500).json({ error: error.message });
+        { expiresIn: "1h" }
+      );
+  
+      // Set cookie
+      res.cookie("token", accessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      });
+  
+      // Return response
+      res.status(200).json({
+        message: `Welcome, ${user.name}`,
+        user: { id: user.id, name: user.name, email: user.email },
+      });
+    } catch (error) {
+      console.error("Login error:", error);
+      res.status(500).json({ error: "An unexpected error occurred" });
+    } finally {
+      await prisma.$disconnect();
     }
-}
+  };
+
+  export const status = async(req, res) => {
+      const token = req.cookies.token;
+      if (!token) {
+        return res.json({ loggedIn: false });
+      }
+    
+      try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        return res.json({ loggedIn: true, user: decoded });
+      } catch (error) {
+        return res.json({ loggedIn: false });
+      }
+  }
