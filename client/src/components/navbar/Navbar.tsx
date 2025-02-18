@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { authStatus } from "@/src/api/authStatus";
 import apiClient from "@/src/api/apiClient";
+import { logout } from "@/src/app/auth/logout/logOut";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -25,9 +26,8 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await apiClient.post('/auth/logout');
+      logout();
       setIsLoggedIn(false);
-      window.location.reload();
     } catch (error) {
       console.error('Logout failed:', error);
     }
