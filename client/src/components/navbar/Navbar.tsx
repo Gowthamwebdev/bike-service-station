@@ -4,11 +4,12 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { authStatus } from "@/src/api/authStatus";
-import apiClient from "@/src/api/apiClient";
 import { logout } from "@/src/app/auth/logout/logOut";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -26,7 +27,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      logout();
+      await logout(router);
       setIsLoggedIn(false);
     } catch (error) {
       console.error('Logout failed:', error);

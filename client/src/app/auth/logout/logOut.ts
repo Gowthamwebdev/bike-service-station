@@ -1,6 +1,6 @@
 import apiClient from "@/src/api/apiClient";
-
-export const logout = async() =>{
+import { useRouter } from "next/navigation";
+export const logout = async(router: ReturnType<typeof useRouter>) =>{
     try{
         await apiClient.post('auth/logout');
         window.location.reload();

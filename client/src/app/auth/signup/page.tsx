@@ -4,7 +4,7 @@ import React from "react";
 import { Form, Input, Button } from "@heroui/react";
 import apiClient from "@/src/api/apiClient";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function Signup() {
 
@@ -14,7 +14,6 @@ export default function Signup() {
   const [submitted, setSubmitted] = React.useState<null | Record<string, string>>(null);
   const [errors, setErrors] = React.useState<Record<string, string>>({});
 
-  // Real-time password validation
   const getPasswordError = (value: string) => {
     if (value.length < 4) {
       return "Password must be 4 characters or more";
@@ -68,7 +67,7 @@ export default function Signup() {
         email: data.email,
         password: data.password,
       });
-
+      toast.success("Signup successful...");
       console.log("Signup successful:", response.data);
       alert("Signup successful! redirecting...");
 
@@ -78,6 +77,7 @@ export default function Signup() {
 
     } catch (error) {
       console.error("Signup failed:", error);
+      toast.error("Something went Wrong");
       setErrors({ api: "Signup failed. Please try again later." });
     }
   };

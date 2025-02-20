@@ -5,6 +5,7 @@ import { ErrorState, FormState } from "@/src/types/formType";
 import apiClient from "@/src/api/apiClient";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/src/context/GlobalProviders";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [formState, setFormState] = useState<FormState>({
@@ -35,14 +36,20 @@ const Login = () => {
     }
 
     try {
-      const response = await apiClient.post("/auth/login", {
+      const response = await toast.promise(apiClient.post("/auth/login", {
         email: formState.email,
         password: formState.password,
       }, {
         withCredentials: true 
-      });
+      }),{
+        loading: "Authenticating",
+        success: "Authenticated",
+        error: "Invalid credentials",
+      }
+    );
 
       console.log("Login successful:", response.data);
+      toast.success("Login Successful");
 
       setLoginStatus(response.data.message || "Login successful!");
 
@@ -53,7 +60,7 @@ const Login = () => {
 
       setTimeout(() => {
         router.push("/dashboard"); // Redirect to dashboard after successful login
-      }, 2000);
+      }, 1000);
 
       setErrors({});
       
@@ -62,6 +69,7 @@ const Login = () => {
       setLoginStatus(
         error.response?.data?.error || "An unexpected error occurred"
       );
+      toast.error("Somsthing went wrong");
     }
   };
 
