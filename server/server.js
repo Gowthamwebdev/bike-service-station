@@ -4,6 +4,7 @@ import { urlencoded, json} from 'express';
 import bodyParser from 'body-parser';
 import authRoutes from './routes/authRoutes.js';
 import servicesRoutes from './routes/servicesRoutes.js';
+import bikeRoutes from './routes/bikeRoutes.js';
 import cookieParser from 'cookie-parser';
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/services', servicesRoutes);
+app.use('/api/bikes', bikeRoutes);
 app.listen(5000, () => {
     console.log('listening on port 5000');
 })
