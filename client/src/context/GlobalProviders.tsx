@@ -1,17 +1,15 @@
 "use client";
 import React, { createContext, useContext, useState, ReactNode } from "react";
+import { userType } from "../types/userType";
+import { serviceType } from "../types/serviceType";
+// Adjust the path based on your project structure
 
-// Define the types for the context state
-interface User {
-  userId: string | null;
-  name: string | null;
-}
-
+// Define context type
 interface GlobalContextType {
-  user: User;
-  setUser: React.Dispatch<React.SetStateAction<User>>;
-  services: any[];
-  setServices: React.Dispatch<React.SetStateAction<any[]>>;
+  user: userType;
+  setUser: React.Dispatch<React.SetStateAction<userType>>;
+  services: serviceType[];
+  setServices: React.Dispatch<React.SetStateAction<serviceType[]>>;
   bookings: any[];
   setBookings: React.Dispatch<React.SetStateAction<any[]>>;
   searchTerm: string;
@@ -20,19 +18,19 @@ interface GlobalContextType {
 
 export const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 
-// Define the type for the GlobalProvider component props
+// Define the provider props
 interface GlobalProviderProps {
   children: ReactNode;
 }
 
 // Create the provider component
 const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User>({
-    userId: null,
-    name: null,
+  const [user, setUser] = useState<userType>({
+    userId: 'null',
+    name: 'null',
   });
 
-  const [services, setServices] = useState<any[]>([]);
+  const [services, setServices] = useState<serviceType[]>([]);
   const [bookings, setBookings] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
 

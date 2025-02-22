@@ -17,10 +17,7 @@ const Home = () => {
                 Experience hassle-free biking with our comprehensive maintenance and repair options. 
                 </p>
                 <div className="flex justify-center sm:justify-start py-4">
-                 <Button 
-                 className='bg-gradient-to-b from-[#DB6400] via-[#d86405] to-[#f7980a] rounded-md text-white hover:bg-orange-600 p-2'
-                 >Book now
-                 </Button>
+                 <Link href={'auth/login'} className='text-white bg-gradient-to-b from-gray-900 to-gray-600 p-2 rounded-tr-large rounded-bl-large hover:scale-125 transition-all'>Get Started</Link>
                 </div>
               </div>
               

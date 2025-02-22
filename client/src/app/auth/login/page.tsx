@@ -52,7 +52,8 @@ const Login = () => {
       toast.success("Login Successful");
 
       setLoginStatus(response.data.message || "Login successful!");
-
+      localStorage.setItem("user", response.data.user.name);
+      localStorage.setItem("userId", response.data.user.id);
       setUser({
         userId: response.data.user.id,  
         name: response.data.user.name, 

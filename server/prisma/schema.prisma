@@ -7,22 +7,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   email     String    @unique
   phone     String
   password  String
-  bookings  Booking[] 
-  bookedAt  DateTime  @default(now())
+  bikes     Bike[]    @relation("UserBikes")
+  bookings  Booking[] @relation("UserBookings")
+}
+
+model Bike {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String    @db.ObjectId
+  user            User      @relation("UserBikes", fields: [userId], references: [id])
+  name            String   
+  brand           String
+  engineCapacity  String
+  registrationNumber      String // also add lastServiceDate and nextServiceDate as add on feature
+  bookings        Booking[]
 }
 
 model Booking {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String    @db.ObjectId // Ensure the field matches MongoDB's ObjectId type
-  user      User      @relation(fields: [userId], references: [id])
-  services  String[]  // Array of service IDs
+  userId    String    @db.ObjectId
+  bikeId    String    @db.ObjectId
+  user      User      @relation("UserBookings", fields: [userId], references: [id])
+  bike      Bike      @relation(fields: [bikeId], references: [id])
+  services  String[]
 }
 
 model Service {

@@ -7,7 +7,8 @@ const router = express.Router();
 // Get all bikes
 export const getBikes = async (req, res) => {
     try {
-        const bikes = await prisma.bike.findMany();
+        const user = req.user._id;
+        const bikes = await prisma.bike.findMany({ where: {userId: user}});
         res.status(200).json(bikes);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -31,10 +32,20 @@ export const getBike = async (req, res) => {
 // Add a new bike
 export const addBike = async (req, res) => {
     try {
-        const { name, brand, engineCapacity } = req.body;
-        const newBike = await prisma.bike.create({
-            data: { name, brand, engineCapacity },
+        const user = req.user._id;
+        const { name, brand, engineCapacity, registrationNumber } = req.body;
+
+        const existingBike = await prisma.bike.findFirst({
+            where: { registrationNumber }
         });
+
+        if (existingBike) {
+            return res.status(400).json({ message: 'Bike with this registration number already exists' });
+        }
+
+        const newBike = await prisma.bike.create({
+            data: { userId: user, name, brand, engineCapacity, registrationNumber },
+        });       
         res.status(201).json(newBike);
     } catch (error) {
         res.status(500).json({ message: error.message });
