@@ -1,10 +1,9 @@
 "use client";
-import React, { createContext, useContext, useState, ReactNode } from "react";
+
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { userType } from "../types/userType";
 import { serviceType } from "../types/serviceType";
-// Adjust the path based on your project structure
 
-// Define context type
 interface GlobalContextType {
   user: userType;
   setUser: React.Dispatch<React.SetStateAction<userType>>;
@@ -18,21 +17,23 @@ interface GlobalContextType {
 
 export const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 
-// Define the provider props
 interface GlobalProviderProps {
   children: ReactNode;
 }
 
-// Create the provider component
 const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<userType>({
-    userId: 'null',
-    name: 'null',
-  });
-
+  const [user, setUser] = useState<userType>({ userId: 'null', name: 'null' });
   const [services, setServices] = useState<serviceType[]>([]);
   const [bookings, setBookings] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("userId");
+    const storedUserName = localStorage.getItem("user");
+    if (storedUserId && storedUserName) {
+      setUser({ userId: storedUserId, name: storedUserName });
+    }
+  }, []);
 
   return (
     <GlobalContext.Provider
@@ -54,7 +55,6 @@ const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
 
 export default GlobalProvider;
 
-// Custom hook to use the global context
 export const useGlobalContext = (): GlobalContextType => {
   const context = useContext(GlobalContext);
   if (!context) {

@@ -34,7 +34,7 @@ export const addBike = async (req, res) => {
     try {
         const user = req.user._id;
         const { name, brand, engineCapacity, registrationNumber } = req.body;
-
+        console.log(user)
         const existingBike = await prisma.bike.findFirst({
             where: { registrationNumber }
         });

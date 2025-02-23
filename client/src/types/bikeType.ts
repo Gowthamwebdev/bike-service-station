@@ -1,4 +1,4 @@
-export type Bike = {
+export type bikeType = {
     id: string;
     name: string;
     brand: string;
