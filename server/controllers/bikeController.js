@@ -7,7 +7,8 @@ const router = express.Router();
 // Get all bikes
 export const getBikes = async (req, res) => {
     try {
-        const user = req.user._id;
+        const user = req.user.userId;
+        console.log(user)
         const bikes = await prisma.bike.findMany({ where: {userId: user}});
         res.status(200).json(bikes);
     } catch (error) {
@@ -32,25 +33,28 @@ export const getBike = async (req, res) => {
 // Add a new bike
 export const addBike = async (req, res) => {
     try {
-        const user = req.user._id;
-        const { name, brand, engineCapacity, registrationNumber } = req.body;
-        console.log(user)
-        const existingBike = await prisma.bike.findFirst({
-            where: { registrationNumber }
-        });
-
-        if (existingBike) {
-            return res.status(400).json({ message: 'Bike with this registration number already exists' });
-        }
-
-        const newBike = await prisma.bike.create({
-            data: { userId: user, name, brand, engineCapacity, registrationNumber },
-        });       
-        res.status(201).json(newBike);
+      const userId = req.user.userId; 
+      console.group(userId)
+      const { name, brand, engineCapacity, registrationNumber } = req.body;
+  
+      const existingBike = await prisma.bike.findFirst({
+        where: { registrationNumber },
+      });
+  
+      if (existingBike) {
+        return res.status(400).json({ message: "Bike with this registration number already exists" });
+      }
+  
+      const newBike = await prisma.bike.create({
+        data: { userId: userId, name, brand, engineCapacity, registrationNumber },
+      });
+  
+      res.status(201).json(newBike);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+      console.error("Error adding bike:", error); 
+      res.status(500).json({ message: "Internal server error" });
     }
-};
+  };
 
 // Update a bike
 export const updateBike = async (req, res) => {
