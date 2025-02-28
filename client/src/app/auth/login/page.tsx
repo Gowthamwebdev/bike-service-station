@@ -49,7 +49,6 @@ const Login = () => {
     );
 
       console.log("Login successful:", response.data);
-      toast.success("Login Successful");
 
       setLoginStatus(response.data.message || "Login successful!");
       localStorage.setItem("user", response.data.user.name);
@@ -70,7 +69,6 @@ const Login = () => {
       setLoginStatus(
         error.response?.data?.error || "An unexpected error occurred"
       );
-      toast.error("Somsthing went wrong");
     }
   };
 

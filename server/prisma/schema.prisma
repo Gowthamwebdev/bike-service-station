@@ -29,13 +29,18 @@ model Bike {
 }
 
 model Booking {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String    @db.ObjectId
-  bikeId    String    @db.ObjectId
-  user      User      @relation("UserBookings", fields: [userId], references: [id])
-  bike      Bike      @relation(fields: [bikeId], references: [id])
-  services  String[]
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String   @db.ObjectId
+  bikeId     String   @db.ObjectId
+  user       User     @relation("UserBookings", fields: [userId], references: [id])
+  bike       Bike     @relation(fields: [bikeId], references: [id])
+  services   String[] 
+  status     String   @default("pending") // pending, confirmed, completed, cancelled
+  date       DateTime 
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
+
 
 model Service {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId

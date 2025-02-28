@@ -29,7 +29,7 @@ export const getUserBike = async(bikeId: string) => {
     registrationNumber: string;
   }) => {
     try {
-      const response = await apiClient.post("/bikes/addbike", bikeData);
+      const response = await apiClient.post("/bikes/new", bikeData);
       return response.data;
     } catch (error) {
       console.error("Error adding bike", error);
