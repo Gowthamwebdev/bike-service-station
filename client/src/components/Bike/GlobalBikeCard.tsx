@@ -15,7 +15,7 @@ const GlobalBikeCard: React.FC<GlobalBikeCardProps> = ({ bike }) => {
   return (
     <>
       <div 
-        className="border border-gray-200 rounded-xl bg-white cursor-pointer hover:shadow-md transition-shadow duration-300"
+        className="border border-gray-200 rounded-xl bg-white cursor-pointer "
         onClick={() => setSelectedBike(bike)}
       >
         <div className="px-2 pt-2">

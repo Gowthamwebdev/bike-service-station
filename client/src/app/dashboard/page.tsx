@@ -32,7 +32,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-[70vh] bg-gray-50 p-6">
       {/* Header Section */}
       <div className="lg:px-20 px-8">
         <div className="flex justify-between items-center pt-5">

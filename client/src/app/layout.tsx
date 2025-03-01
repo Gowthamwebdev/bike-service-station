@@ -24,8 +24,11 @@ export default function RootLayout({
         <GlobalProvider>
           <Providers>
             <Navbar />
-            <main>{children}</main>
+            <main className="flex-grow">{children}</main>
             <Toaster position="bottom-right" />
+            <footer className="text-center py-4 text-sm absolute w-full p-4 mb-4 bottom-0 dark:bg-gray-900 dark:text-white">
+           <p className="text-xl font-serif">A <span className="font-semibold">GowthamWebdev</span> project</p>
+          </footer>
           </Providers>
         </GlobalProvider>
       </body>

@@ -32,7 +32,7 @@ const Bookings: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-[70vh] bg-gray-50 p-6">
       {/* Header */}
       <div className="lg:px-20 px-8">
       <div className="flex justify-between items-center mb-6">
