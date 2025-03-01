@@ -63,7 +63,7 @@ export const login = async (req, res) => {
       const accessToken = jwt.sign(
         { userId: user.id },
         process.env.JWT_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "1d" }
       );
       // console.log(accessToken);
       // Set cookie

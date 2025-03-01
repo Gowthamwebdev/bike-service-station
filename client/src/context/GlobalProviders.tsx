@@ -1,16 +1,19 @@
-"use client";
-
+'use client'
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { userType } from "../types/userType";
 import { serviceType } from "../types/serviceType";
+import { bikeType } from "../types/bikeType";
+import { bookingType } from "../types/bookingType";
 
 interface GlobalContextType {
   user: userType;
   setUser: React.Dispatch<React.SetStateAction<userType>>;
   services: serviceType[];
   setServices: React.Dispatch<React.SetStateAction<serviceType[]>>;
-  bookings: any[];
-  setBookings: React.Dispatch<React.SetStateAction<any[]>>;
+  bookings: bookingType[];
+  setBookings: React.Dispatch<React.SetStateAction<bookingType[]>>;
+  bikes: bikeType[];
+  setBikes: React.Dispatch<React.SetStateAction<bikeType[]>>;
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -22,9 +25,10 @@ interface GlobalProviderProps {
 }
 
 const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<userType>({ userId: 'null', name: 'null' });
+  const [user, setUser] = useState<userType>({ userId: "null", name: "null" });
   const [services, setServices] = useState<serviceType[]>([]);
-  const [bookings, setBookings] = useState<any[]>([]);
+  const [bookings, setBookings] = useState<bookingType[]>([]);
+  const [bikes, setBikes] = useState<bikeType[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
@@ -44,6 +48,8 @@ const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
         setServices,
         bookings,
         setBookings,
+        bikes,
+        setBikes,
         searchTerm,
         setSearchTerm,
       }}

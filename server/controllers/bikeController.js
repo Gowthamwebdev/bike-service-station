@@ -20,6 +20,7 @@ export const getBikes = async (req, res) => {
 export const getBike = async (req, res) => {
     try {
         const { bikeId } = req.params;
+        console.log(bikeId)
         const bike = await prisma.bike.findUnique({
             where: { id: bikeId },
         });

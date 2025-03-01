@@ -6,13 +6,11 @@ import { useGlobalContext } from "@/src/context/GlobalProviders";
 import AddBikeForm from "@/src/components/Bike/AddBikeForm";
 import { getUserBikes } from "@/src/api/bikeApi";
 import GlobalBikeCard from "@/src/components/Bike/GlobalBikeCard";
-import Image from "next/image";
-import Loader from "@/src/components/Loader"; // Assuming you have a Loader component
+import Loader from "@/src/components/Loader";
 
 const Dashboard = () => {
-  const { user } = useGlobalContext();
+  const { user, bikes, setBikes } = useGlobalContext(); // Access bikes and setBikes from context
   const [showForm, setShowForm] = useState(false);
-  const [bikes, setBikes] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -25,7 +23,7 @@ const Dashboard = () => {
     setLoading(true);
     try {
       const bikesData = await getUserBikes();
-      setBikes(bikesData);
+      setBikes(bikesData); 
     } catch (error) {
       console.error("Error fetching bikes:", error);
     } finally {
@@ -48,12 +46,10 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Add Bike Form */}
       {showForm && <AddBikeForm setShowForm={setShowForm} />}
 
-      {/* Bike List Section */}
       {loading ? (
-        <Loader /> // Show loader while fetching bikes
+        <Loader />
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 py-5 md:gap-10 gap-5">
           {bikes.length === 0 ? (

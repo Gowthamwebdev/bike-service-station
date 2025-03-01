@@ -9,3 +9,14 @@ export const getServices = async () => {
         return [];
     }
 };
+
+export const getServiceById = async (id: string) => {
+    try{
+        const response = await apiClient.get(`/services/${id}`);
+        return response.data;
+    }
+    catch(error){
+        console.error('Error fetching services:', error);
+        return [];
+    }
+}

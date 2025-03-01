@@ -51,7 +51,7 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div className="lg:flex hidden items-center gap-7 text-sm font-semibold">
+          <div className="lg:flex hidden items-end gap-7 text-sm font-semibold">
             <Link href={"/dashboard"} className="dark:hover:text-white hover:text-black duration-100">Dashboard</Link>
             <Link href={"/view-services"} className="dark:hover:text-white hover:text-black duration-100">Services</Link>
             <Link href={"/bookings"} className="dark:hover:text-white hover:text-black duration-100">Bookings</Link>
@@ -62,7 +62,7 @@ const Navbar = () => {
             {isLoggedIn ? (
               <button
                 onClick={handleLogout}
-                className="px-4 py-0.5 pb-1 bg-gradient-to-br from-red-500 via-red-700 to-red-800 font-semibold rounded-lg text-white"
+                className="px-4 py-0.5 pb-1 bg-gradient-to-br from-primary to-red-600 font-semibold rounded-lg text-white"
               >
                 Logout
               </button>

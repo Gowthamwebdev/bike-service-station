@@ -35,6 +35,7 @@ model Booking {
   user       User     @relation("UserBookings", fields: [userId], references: [id])
   bike       Bike     @relation(fields: [bikeId], references: [id])
   services   String[] 
+  serviceNames String[]
   status     String   @default("pending") // pending, confirmed, completed, cancelled
   date       DateTime 
   createdAt  DateTime @default(now())

@@ -34,3 +34,21 @@ export const getServices = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+export const getServiceById = async (req, res) => {
+    try {
+      const { serviceId } = req.params;
+      const service = await prisma.service.findUnique({
+        where: { id: serviceId },
+      });
+      console.log(serviceId, service);
+      if (!service) {
+        return res.status(404).json({ error: "Service not found" });
+      }
+  
+      res.status(200).json(service);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+  

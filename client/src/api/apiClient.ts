@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const apiClient = axios.create({
     baseURL: 'http://localhost:5000/api',
-    timeout: 5000,
+    timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
         //  Authorization: `${localStorage.getItem("token")}`

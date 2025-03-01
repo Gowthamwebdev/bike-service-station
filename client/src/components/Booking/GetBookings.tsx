@@ -1,9 +1,25 @@
-import React from 'react'
+'use client';
 
-const GetBookings = () => {
-  return (
-    <div>GetBookings</div>
-  )
-}
+import React, { useEffect } from 'react';
+import { getBookings } from '@/src/api/bookingApi';
+import { useGlobalContext } from '@/src/context/GlobalProviders';
 
-export default GetBookings
+const GetBookings: React.FC = () => {
+  const { setBookings } = useGlobalContext(); 
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const data = await getBookings(); 
+        setBookings(data);
+      } catch (error) {
+        console.error('Error fetching bookings:', error);
+      }
+    };
+    fetchBookings();
+  }, [setBookings]);
+
+  return null; 
+};
+
+export default GetBookings;
