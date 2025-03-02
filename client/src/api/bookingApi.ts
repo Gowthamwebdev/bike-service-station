@@ -12,7 +12,7 @@ export const getBookings = async () => {
   }
 };
 
-export const addBooking = async (bookingData: bookingType) => {
+export const addBooking = async (bookingData: any) => {
   try {
     const response = await apiClient.post("/bookings/new", bookingData);
     return response.data;
