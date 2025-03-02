@@ -35,23 +35,17 @@ const ViewServices: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[70vh] bg-gray-50 p-6">
-      <div className="lg:px-20 px-8">
-        <div className="flex justify-between items-center pt-5">
-          <h1 className="text-lg font-semibold">Our Services</h1>
-        </div>
-      </div>
+    <div className="min-h-[70vh] p-6">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-xl font-bold mb-4">Our Services</h1>
 
-      {loading ? (
-        <Loader />
-      ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 py-5 md:gap-10 gap-5">
-          {services.length === 0 ? (
-            <p className="text-gray-500 text-center col-span-full">
-              No services found.
-            </p>
-          ) : (
-            services.map((item: serviceType) => (
+        {loading ? (
+          <Loader />
+        ) : services.length === 0 ? (
+          <p className="text-center text-gray-600">No services available.</p>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            {services.map((item: serviceType) => (
               <div
                 key={item.id}
                 onClick={() => handleServiceClick(item.id)}
@@ -59,10 +53,10 @@ const ViewServices: React.FC = () => {
               >
                 <GlobalServiceCard item={item} />
               </div>
-            ))
-          )}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

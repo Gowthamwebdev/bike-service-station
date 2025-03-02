@@ -14,31 +14,29 @@ const GlobalBikeCard: React.FC<GlobalBikeCardProps> = ({ bike }) => {
 
   return (
     <>
-      <div 
-        className="border border-gray-200 rounded-xl bg-white cursor-pointer "
+      <div
+        className="border border-gray-300 rounded-md bg-white p-2 cursor-pointer"
         onClick={() => setSelectedBike(bike)}
       >
-        <div className="px-2 pt-2">
-          <Image 
-            src={bike?.image || "/placeholder-bike.png"} 
-            alt={bike.name} 
-            width={100}
-            height={100}
-            className="aspect-square object-cover rounded-xl w-full"
-          />
-        </div>
-        <div className="p-2 px-4">
-          <h1 className="capitalize font-semibold truncate max-w-full">{bike.name}</h1>
-          <p className="text-gray-400 text-sm">Brand: {bike.brand}</p>
-          <p className="text-gray-400 text-sm">Engine: {bike.engineCapacity}</p>
+        <Image
+          src={bike?.image || "/placeholder-bike.png"}
+          alt={bike.name}
+          width={150}
+          height={150}
+          className="w-full h-auto rounded-md"
+        />
+        <div className="mt-2">
+          <h1 className="text-lg font-semibold truncate">{bike.name}</h1>
+          <p className="text-gray-500 text-sm">Brand: {bike.brand}</p>
+          <p className="text-gray-500 text-sm">Engine: {bike.engineCapacity}</p>
         </div>
       </div>
 
       {selectedBike && (
-        <BikeCard 
-          bike={selectedBike} 
-          onClose={() => setSelectedBike(null)} 
-          onUpdate={() => setSelectedBike(null)} 
+        <BikeCard
+          bike={selectedBike}
+          onClose={() => setSelectedBike(null)}
+          onUpdate={() => setSelectedBike(null)}
         />
       )}
     </>

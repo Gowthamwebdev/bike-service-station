@@ -9,7 +9,7 @@ import GlobalBikeCard from "@/src/components/Bike/GlobalBikeCard";
 import Loader from "@/src/components/Loader";
 
 const Dashboard = () => {
-  const { user, bikes, setBikes } = useGlobalContext(); // Access bikes and setBikes from context
+  const { user, bikes, setBikes } = useGlobalContext();
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -23,7 +23,7 @@ const Dashboard = () => {
     setLoading(true);
     try {
       const bikesData = await getUserBikes();
-      setBikes(bikesData); 
+      setBikes(bikesData);
     } catch (error) {
       console.error("Error fetching bikes:", error);
     } finally {
@@ -32,39 +32,34 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-[70vh] bg-gray-50 p-6">
-      {/* Header Section */}
-      <div className="lg:px-20 px-8">
-        <div className="flex justify-between items-center pt-5">
-          <h1 className="text-lg font-semibold">My Bikes</h1>
+    <div className="min-h-[70vh] bg-gray-50 p-4">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-xl font-bold">My Bikes</h1>
           <Button
             onClick={() => setShowForm(true)}
-            className="bg-gradient-to-tr from-gray-700 to-gray-900 text-white px-4 py-2 rounded-lg"
+            className="bg-gray-800 text-white px-3 py-2 rounded-md"
           >
             Add Bike
           </Button>
         </div>
+
+        {showForm && <AddBikeForm setShowForm={setShowForm} />}
+
+        {loading ? (
+          <Loader />
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            {bikes.length === 0 ? (
+              <p className="text-gray-500">No bikes found.</p>
+            ) : (
+              bikes.map((bike) => (
+                <GlobalBikeCard key={bike.id} bike={bike} />
+              ))
+            )}
+          </div>
+        )}
       </div>
-
-      {showForm && <AddBikeForm setShowForm={setShowForm} />}
-
-      {loading ? (
-        <Loader />
-      ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 py-5 md:gap-10 gap-5">
-          {bikes.length === 0 ? (
-            <p className="text-gray-500 text-center col-span-full">
-              No bikes found.
-            </p>
-          ) : (
-            bikes.map((bike) => (
-              <div key={bike.id} className="">
-                <GlobalBikeCard bike={bike} />
-              </div>
-            ))
-          )}
-        </div>
-      )}
     </div>
   );
 };

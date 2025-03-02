@@ -48,14 +48,11 @@ const AddBooking: React.FC<AddBookingProps> = ({ onClose }) => {
     };
 
     try {
-      await toast.promise(
-        addBooking(bookingData),
-        {
-          loading: "Submitting booking...",
-          success: "Booking created successfully!",
-          error: "Failed to create booking.",
-        }
-      );
+      await toast.promise(addBooking(bookingData), {
+        loading: "Submitting booking...",
+        success: "Booking created successfully!",
+        error: "Failed to create booking.",
+      });
       onClose();
     } catch (error) {
       console.error("Error creating booking:", error);
@@ -63,24 +60,22 @@ const AddBooking: React.FC<AddBookingProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-[70vh]">
+    <div className="flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md p-8 bg-white rounded-lg border border-gray-600 space-y-6"
+        className="w-full max-w-md sm:max-w-lg p-6 sm:p-8 bg-white rounded-lg border border-gray-600"
       >
-        <h2 className="text-2xl font-bold text-center text-gray-800">
+        <h2 className="text-xl sm:text-2xl font-bold text-center mb-4 sm:mb-6">
           Book a Service
         </h2>
 
         {/* Bike Dropdown */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Select Your Bike
-          </label>
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-1">Select Your Bike</label>
           <select
             value={bikeId}
             onChange={(e) => setBikeId(e.target.value)}
-            className="w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary"
             required
           >
             <option value="" disabled>
@@ -95,55 +90,48 @@ const AddBooking: React.FC<AddBookingProps> = ({ onClose }) => {
         </div>
 
         {/* Services Checkboxes */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Select Services
-          </label>
-          <div className="grid grid-cols-2 gap-3 mt-2">
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-1">Select Services</label>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {services.map((service) => (
-              <label
-                key={service.id}
-                className="flex items-center space-x-2 cursor-pointer"
-              >
+              <label key={service.id} className="flex items-center gap-2">
                 <input
                   type="checkbox"
                   value={service.id}
                   checked={selectedServices.includes(service.id)}
                   onChange={() => handleServiceChange(service.id, service.name)}
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="h-4 w-4 text-primary rounded focus:ring-primary"
                 />
-                <span className="text-sm text-gray-700">{service.name}</span>
+                <span className="text-sm">{service.name}</span>
               </label>
             ))}
           </div>
         </div>
 
         {/* Handover Date */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Handover Date
-          </label>
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-1">Handover Date</label>
           <input
             type="date"
             value={handoverDate}
             onChange={(e) => setHandoverDate(e.target.value)}
-            className="w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary"
             required
           />
         </div>
 
         {/* Buttons */}
-        <div className="flex justify-between gap-6 items-center">
+        <div className="flex justify-between gap-4">
           <button
             type="button"
             onClick={onClose}
-            className="w-1/2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-600"
+            className="w-1/2 p-3 bg-gray-600 text-white rounded-lg hover:bg-gradient-to-bl hover:from-gray-700 hover:to-gray-900"
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="w-1/2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-700"
+            className="w-1/2 p-3 bg-primary text-white rounded-lg hover:bg-gradient-to-bl hover:from-primary hover:to-red-700"
           >
             Confirm
           </button>
