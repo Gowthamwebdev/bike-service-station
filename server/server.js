@@ -10,7 +10,7 @@ import cookieParser from 'cookie-parser';
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.NEXT_PUBLIC_API_URL,
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,token'
@@ -18,12 +18,6 @@ app.use(cors({
 
 // Middleware to parse JSON request bodies
 app.use(json());
-
-app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    }));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
