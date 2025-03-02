@@ -19,7 +19,7 @@ const GlobalBikeCard: React.FC<GlobalBikeCardProps> = ({ bike }) => {
         onClick={() => setSelectedBike(bike)}
       >
         <Image
-          src={bike?.image || "/placeholder-bike.png"}
+          src={"/placeholder-bike.png"}
           alt={bike.name}
           width={150}
           height={150}
