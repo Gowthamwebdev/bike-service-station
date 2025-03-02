@@ -24,7 +24,7 @@ const BikeCard: React.FC<BikeCardProps> = ({ bike, onClose, onUpdate }) => {
         </button>
 
         <Image
-          src={bike.image || "/placeholder-bike.png"}
+          src={ "/placeholder-bike.png"}
           alt={bike.name}
           width={200}
           height={200}
