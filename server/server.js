@@ -11,7 +11,7 @@ import { dbConn } from './Database/dbConn.js';
 const app = express();
 
 app.use(cors({
-    origin: process.env.NEXT_PUBLIC_API_URL,
+    origin: "https://bike-service-station.vercel.app",
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,token'
