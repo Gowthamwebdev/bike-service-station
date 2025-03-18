@@ -25,9 +25,18 @@ app.use(cookieParser());
 
 dbConn();
 
+app.get('/testing', (req, res) => {
+  res.send('testing');
+});
+
 app.use('/auth', authRoutes);
 app.use('/services', servicesRoutes);
 app.use('/bikes', bikeRoutes);
 app.use('/bookings', bookingRoutes);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 export default app;
